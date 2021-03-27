@@ -1,20 +1,19 @@
 <!-- 网易云音乐主页 -->
 <template>
   <div>
-    <login-dialog>
-    </login-dialog>
+    <my-dialog></my-dialog>
   </div>
 </template>
 
 <script>
-import loginDialog from '../components/dialog.vue'
+import dialog from './dialog/dialog.vue'
 export default {
   data () {
     return {
     }
   },
   components: {
-    loginDialog
+    'my-dialog': dialog
   }
 }
 

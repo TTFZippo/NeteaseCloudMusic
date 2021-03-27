@@ -2,7 +2,7 @@
  * EventUtil: 标准事件流处理对象(向后兼容浏览器)
  * EventTarget: 构造函数。实例化的对象暴露添加事件处理函数(addHandler)、执行事件处理函数(run)、清除事件处理函数(removeHandler)三个接口
  * dragdrop: 实例拖拽对象(dragObject)。监听鼠标事件，完成位移。
- * 用法：导出dragObject，className=="draggable"即可完成拖拽功能。
+ * 用法：导出dragObject，className=="draggable",调用enable函数即可完成拖拽功能。
  */
 
 //标准事件流(处理浏览器兼容性问题)
@@ -109,9 +109,11 @@ var dragdrop = function () {
         //如果鼠标点击的标签className中有draggable，就可以拖拽
         if (target.className.indexOf("draggable") > -1) {
           dragging = target;
+          // console.log()
+          dragging = dragging.parentNode
           //diffx是偏移量，鼠标选取位置和div最左边界的距离
-          diffx = event.clientX - target.offsetLeft;
-          diffy = event.clientY - target.offsetTop;
+          diffx = event.clientX - dragging.offsetLeft;
+          diffy = event.clientY - dragging.offsetTop;
         }
         break;
       case "mousemove":
@@ -129,15 +131,15 @@ var dragdrop = function () {
             dragging.style.left = 0 + "px";
           } else if ((event.clientX - diffx) > (browerWidth - parseInt(draggingW))) {
             //如果鼠标位置比之前要往右了,设置为最右值
-            dragging.style.left = (browerWidth - parseInt(draggingW)) + "px";
+            dragging.style.left = (browerWidth - parseFloat(draggingW)) + "px";
           } else {
             //正常情况直接设置值
             dragging.style.left = (event.clientX - diffx) + "px";
           }
           if ((event.clientY - diffy) < 0) {
             dragging.style.top = 0 + "px";
-          } else if ((event.clientY - diffy) > (browerHeight - parseInt(draggingH))) {
-            dragging.style.top = (browerHeight - parseInt(draggingH)) + "px";
+          } else if ((event.clientY - diffy) > (browerHeight - parseFloat(draggingH))) {
+            dragging.style.top = (browerHeight - parseFloat(draggingH)) + "px";
           } else {
             dragging.style.top = (event.clientY - diffy) + "px";
           }
@@ -166,4 +168,6 @@ var dragdrop = function () {
   return dragObject;
 };
 var dragObject = dragdrop();
-dragObject.enable();
+// dragObject.enable();
+
+ export default dragObject;
