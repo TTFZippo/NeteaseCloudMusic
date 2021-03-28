@@ -4,31 +4,31 @@
     <main class="top-container">
       <div class="left">
         <img src="../../../assets/images/phone.png" alt="">
-        <button class="login-phone">手机号登录</button>
-        <button class="signup">注&nbsp;册</button>
+        <button class="login-phone"  @click="gotoDialogPage($event, 'login_phone')">手机号登录</button>
+        <button class="signup"  @click="gotoDialogPage($event, 'signup')">注&nbsp;册</button>
       </div>
       <ul class="other-options">
         <li>
           <img src="../../../assets/images/wechat.png" alt="">
-          <a href="https://music.163.com/api/sns/authorize?snsType=10&clientType=web2&callbackType=Login&forcelogin=true">微信登录</a>
+          <a href="https://music.163.com/api/sns/authorize?snsType=10&clientType=web2&callbackType=Login&forcelogin=true" @click="verifyChecked">微信登录</a>
         </li>
         <li>
           <img src="../../../assets/images/qq.png" alt="">
-          <a href="https://music.163.com/api/sns/authorize?snsType=5&clientType=web2&callbackType=Login&forcelogin=true">QQ登录</a>
+          <a href="https://music.163.com/api/sns/authorize?snsType=5&clientType=web2&callbackType=Login&forcelogin=true" @click="verifyChecked">QQ登录</a>
         </li>
         <li>
           <img src="../../../assets/images/sina.png" alt="">
-          <a href="https://music.163.com/api/sns/authorize?snsType=2&clientType=web2&callbackType=Login&forcelogin=true">微博登录</a>
+          <a href="https://music.163.com/api/sns/authorize?snsType=2&clientType=web2&callbackType=Login&forcelogin=true" @click="verifyChecked">微博登录</a>
         </li>
         <li>
           <img src="../../../assets/images/netease.png" alt="">
-          <a href="javascript:;">网易邮箱账号登录</a>
+          <a href="javascript:;" @click="gotoDialogPage($event, 'login_email')">网易邮箱账号登录</a>
         </li>
       </ul>
     </main>
     <footer class="footer">
       <div class="protocols">
-        <input type="checkbox">
+        <input v-model="isChecked" type="checkbox">
         <span>同意</span>
         <a href="http://st.music.163.com/official-terms/service">《服务条款》</a>
         <a href="http://st.music.163.com/official-terms/service">《隐私政策》</a>
@@ -36,17 +36,47 @@
       </div>
 
       <!-- 底部二维码 -->
-      <div class="qrcode">
+      <div class="qrcode" @click="gotoDialogPage($event, 'login_qrcode')">
         <img src="../../../assets/images/qrcode_bottom.png" alt="">
       </div>
     </footer>
+    <!-- 提示同意协议拟态框 -->
+    <my-modal :isShow="isModalShow" @finished="resetModalShow"></my-modal>
   </div>
 </template>
 
 <script>
+import modal from '../../../components/modal'
+import {mapMutations} from 'vuex'
 export default {
+  components: {
+    'my-modal': modal
+  },
   data () {
     return {
+      isChecked: false,
+      isModalShow: false
+    }
+  },
+  methods: {
+    ...mapMutations(['changeDialogState']),
+    // 重新将isModalShow置false
+    resetModalShow() {
+      this.isModalShow = false;
+    },
+    // 验证是否同意协议
+    verifyChecked(event) {
+      if(!this.isChecked) {
+        event.preventDefault();
+        this.isModalShow = true;
+        return false;
+      }
+      return true;
+    },
+    // 验证是否同意协议并跳转dailog页面
+    gotoDialogPage(event, next) {
+      if(!this.verifyChecked(event)) return;
+      this.changeDialogState(next);
     }
   }
 }
@@ -139,6 +169,7 @@ export default {
 
 .qrcode {
   float: right;
+  cursor: pointer;
 }
 .qrcode img{
   width: 50px;

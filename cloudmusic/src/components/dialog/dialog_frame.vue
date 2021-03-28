@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import dragObject from "../utils/drag.js";
+import dragObject from "../../utils/drag.js";
 export default {
   beforeCreate() {
     dragObject.enable();
