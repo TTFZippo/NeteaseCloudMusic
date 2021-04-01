@@ -1,7 +1,6 @@
 <!-- 集成登录、注册功能的dialog -->
 <template>
   <div>
-    <a href="javascript:;" >{{currentPage}}</a>
     <dialog-frame>
       <template v-slot:title>
         <div>

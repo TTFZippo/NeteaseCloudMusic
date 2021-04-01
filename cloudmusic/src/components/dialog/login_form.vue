@@ -11,14 +11,14 @@
         <select name="area-code" id="">
           <option value="">+86</option>
         </select>
-        <input type="tel">
+        <input type="tel" v-model="account">
       </div>
 
       <label class="label">
         密码：
       </label>
       <div>
-        <input type="password">
+        <input type="password" v-model="password">
       </div>
       <div class="notice">
         <div>
@@ -30,7 +30,7 @@
         </div>
       </div>
       
-      <button>登录</button>
+      <button @click="submit">登录</button>
     </header>
 
     
@@ -40,8 +40,20 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      account: '',
+      password: ''
+    };
   },
+  methods: {
+    // 向父组件传递账号、密码
+    submit() {
+      this.$emit('submit', {
+        account: this.account,
+        password: this.password
+      })
+    }
+  }
 };
 </script>
 
