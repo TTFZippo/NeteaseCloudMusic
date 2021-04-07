@@ -60,7 +60,8 @@
       <div class="left-part">
         <div class="input-container">
           <div>
-            <input type="text" placeholder="音乐/视频/电台/用户" v-model="search_keyword"/>
+            <input type="text" placeholder="音乐/视频/电台/用户" v-model="search_keyword" @blur="isSearhcboxShow=false" @focus="isSearhcboxShow=true"/>
+            <search-box :keywords="search_keyword" :isSearhcboxShow="isSearhcboxShow"></search-box>
           </div>
         </div>
         <div class="creator-center">创作者中心</div>
@@ -69,16 +70,29 @@
         </div>
       </div>
     </nav>
-  <search-box :keywords="search_keyword"></search-box>
   </div>
 </template>
 
 <script>
 import searchBox from '../searchbox/searchbox.vue'
 export default {
+  created () {
+    // console.log(this)
+    // this.request.get('/banner', {
+    //   params: {
+    //     type: 0
+    //   }
+    // }).then(result => {
+    //   console.log(result);
+    // }).catch(err => {
+    //   // console.log(err);
+    // })
+  },
   data() {
     return {
-      search_keyword: ""
+      search_keyword: "",
+      // 控制searchbox弹出
+      isSearhcboxShow: false
     };
   },
   components: {
@@ -87,7 +101,7 @@ export default {
   methods: {
     
   }
-};
+};  
 </script>
 
 <style scoped>

@@ -17,7 +17,7 @@ const request = axios.create({
 request.interceptors.response.use(response => {
   // TODO: 如果未登录，那么提示先登录
   if(response.data.code == 200) {
-    return response.data.result
+    return response.data
   }
 })
 
