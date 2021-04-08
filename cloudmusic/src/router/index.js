@@ -21,6 +21,7 @@ const routes = [
   {
     path: '/discover',
     component: discover,
+    redirect: '/discover/recommand',
     children: [
       {
         path: 'recommand',

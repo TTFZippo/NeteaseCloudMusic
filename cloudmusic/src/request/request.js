@@ -10,6 +10,9 @@ const request = axios.create({
 
 // 请求拦截
 // request.interceptors.request.user(config => {
+//   config.data = {
+    
+//   }
 //   return config;
 // })
 
