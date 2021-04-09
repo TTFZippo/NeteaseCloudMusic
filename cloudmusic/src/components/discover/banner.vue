@@ -1,25 +1,37 @@
 <!-- 轮播图 -->
 <template>
-  <div class="banner">
+  <div
+    class="banner"
+    :style="{
+      backgroundImage: `url(${bannerData[activeIndex].backgroundImage})`,
+    }"
+  >
     <div class="banner-wrap">
       <div class="banner-main">
-        <a href="javascript:;" class="back"></a>
+        <a href="javascript:;" class="back" @click="back"></a>
         <div class="banner-image">
-          <a href="javascript:;">
+          <a href="">
             <img
-              :src="this.bannerData[1].imageUrl"
+              :src="bannerData[activeIndex].imageUrl"
               alt=""
+              :class="{ auto: isAuto, active: isActive }"
             />
           </a>
           <div class="dots">
-            <a href="javascript:;" v-for="(item, index) in bannerData" :key="index"></a>
+            <a
+              href="javascript:;"
+              v-for="(item, index) in bannerData"
+              :key="index"
+              :class="{ active: index == activeIndex }"
+              @click="beActived(index)"
+            ></a>
           </div>
         </div>
         <div class="download">
           <a href="https://music.163.com/#/download" class="download-btn"></a>
           <p>PC 安卓 iPhone WP iPad Mac 六大客户端</p>
         </div>
-        <a href="javascript:;" class="next"></a>
+        <a href="javascript:;" class="next" @click="next"></a>
       </div>
     </div>
   </div>
@@ -29,42 +41,80 @@
 export default {
   created() {
     this.getAllBanners();
-    console.log(this.bannerData);
+    this.autoplay();
+
   },
   data() {
     return {
+      // 当前banner
+      activeIndex: 0,
       // 轮播图数据
-      bannerData: [1,2],
-      f: [, , , , , , , , ,],
+      bannerData: [
+        {
+          imageUrl: "",
+          url: "",
+        },
+      ],
+
+      canChange: false,
+      isActive: true,
+      isAuto: false
     };
   },
   methods: {
+    autoplay(delay = 2000) {
+      const timer1 = setInterval(() => {
+        if(this.canChange) {
+          this.isActive = true;
+          this.next();
+        } else {
+          this.isActive = false;
+        }
+        this.canChange = !this.canChange
+      }, delay);
+
+    },
+    // 点击导航点，改变banner图
+    beActived(index) {
+      this.activeIndex = index;
+    },
+    // 上一张
+    back() {
+      this.activeIndex > 0
+        ? this.activeIndex--
+        : (this.activeIndex = this.bannerData.length - 1);
+    },
+    // 下一张
+    next() {
+      this.activeIndex < 9 ? this.activeIndex++ : (this.activeIndex = 0);
+    },
     // 获取imageUrl和url
     addSetProperty(target) {
       Object.defineProperties(target, {
         geturl: {
           value: function () {
-            return { imageUrl: this.imageUrl, url: this.url };
+            return {
+              imageUrl: this.imageUrl,
+              url: this.url,
+              backgroundImage: `${this.imageUrl}?imageView&blur=40x20`,
+            };
           },
         },
       });
     },
     // 获取所有banner数据
-    getAllBanners() {
-      this.request
-        .get("/banner", {
-          params: {
-            type: 0+'&timestamp=1503019930020',
-          },
-        })
-        .then((result) => {
-          for (let i = 0; i < result.banners.length; i++) {
-            this.addSetProperty(result.banners[i]);
-            this.bannerData[i] = JSON.parse(JSON.stringify(result.banners[i].geturl()));
-          }
-            console.log(this.bannerData);
-        });
-        console.log(this.bannerData);
+    async getAllBanners() {
+      const result = await this.request.get("/banner", {
+        params: {
+          type: 0 + "&timestamp=15030199300251",
+        },
+      });
+      this.bannerData = [];
+      for (let i = 0; i < result.banners.length; i++) {
+        this.addSetProperty(result.banners[i]);
+        this.bannerData.push(result.banners[i].geturl());
+      }
+      // console.log(this.bannerData);
     },
   },
 };
@@ -80,7 +130,9 @@ export default {
   background-repeat: no-repeat;
   background-size: 6000px;
   background-position: center center;
+  /* background-color: rgba(255, 255, 255, 0.1); */
 }
+
 .banner-wrap {
   width: 982px;
   margin: 0 auto;
@@ -102,7 +154,14 @@ export default {
 .banner-main .banner-image img {
   width: 730px;
   height: 100%;
+  opacity: 0;
+  transition: opacity 2s linear;
 }
+/* 自动播放使用 */
+.banner-main .banner-image img.active {
+  opacity: 1;
+}
+
 .banner-main .banner-image .dots {
   position: absolute;
   left: 50%;
@@ -116,7 +175,7 @@ export default {
   text-decoration: none;
   width: 6px;
   height: 6px;
-  background-color: rgba(240, 240, 240, .6);
+  background-color: rgba(240, 240, 240, 0.6);
   border-radius: 50%;
 }
 .banner-main .banner-image .dots a.active,
@@ -145,18 +204,18 @@ export default {
   position: absolute;
   left: 104%;
   background-position: 0 -508px;
-} 
+}
 .banner-main .back:hover {
   background-position: 0 -430px;
 }
 .banner-main .next:hover {
   background-position: 0 -578px;
-} 
+}
 
 /* 下载客户端 */
 .banner-main .download {
   flex-basis: 3000px;
-  background-image: url('../../assets/icon/download.png');
+  background-image: url("../../assets/icon/download.png");
   height: 285px;
 }
 .banner-main .download .download-btn {
@@ -166,7 +225,7 @@ export default {
   margin: 186px 0 0 19px;
 }
 .banner-main .download .download-btn:hover {
-  background-image: url('../../assets/icon/download.png');
+  background-image: url("../../assets/icon/download.png");
   background-position: 0 -290px;
 }
 .banner-main .download p {
