@@ -51,6 +51,7 @@ export default {
   padding: 0;
 }
 .wrapper {
+  width: 100%;
   background-color: rgb(194, 12, 12);
 }
 .nav-container {

@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 
 // 发现音乐界面相关
 import discover from '../views/discover/discover.vue'
-const recommand = () => import ('../views/discover/discover_subpage/recommand.vue')
+const recommand = () => import ('../views/discover/discover_subpage/recommand/recommand.vue')
 const toplist = () => import ('../views/discover/discover_subpage/toplist.vue')
 const album = () => import ('../views/discover/discover_subpage/album.vue')
 const artist = () => import ('../views/discover/discover_subpage/artist.vue')

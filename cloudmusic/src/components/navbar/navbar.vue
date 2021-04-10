@@ -110,6 +110,7 @@ export default {
   padding: 0;
 }
 .container {
+  display: block;
   background-color: #242424;
   border-bottom: 5px solid rgb(194, 12, 12);
 }

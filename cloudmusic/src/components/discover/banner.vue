@@ -114,7 +114,6 @@ export default {
         this.addSetProperty(result.banners[i]);
         this.bannerData.push(result.banners[i].geturl());
       }
-      // console.log(this.bannerData);
     },
   },
 };
@@ -138,7 +137,6 @@ export default {
   margin: 0 auto;
 }
 .banner-main {
-  /* border: 1px solid red; */
   position: relative;
   width: 100%;
   display: flex;

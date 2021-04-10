@@ -1,8 +1,6 @@
 <!-- 主页面 -->
 <template>
-  <div>
-    <!-- TODO: 暂时关闭登录dialog框 -->
-    <!-- <my-dialog></my-dialog> -->
+  <div class="index">
     <nav-bar></nav-bar>
     <router-view></router-view>
   </div>
