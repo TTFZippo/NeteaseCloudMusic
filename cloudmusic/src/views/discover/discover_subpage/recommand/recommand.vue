@@ -38,6 +38,8 @@
           </div>
           <!-- 新碟上架 -->
           <newAlbum class="new-album" :albums="albums"></newAlbum>
+          <!-- 榜单 -->
+          <toplist></toplist>
         </div>
         <!-- 右边部分 -->
         <aside class="aside"></aside>
@@ -53,6 +55,7 @@
 import banner from "../../../../components/discover/banner.vue"
 import playlist from "../../../../components/playlist.vue";
 import newAlbum from "./recommand_subpage/newAlbum.vue"
+import toplist from './recommand_subpage/toplist.vue'
 export default {
   created() {
     this.getAllPlaylists();
@@ -62,6 +65,7 @@ export default {
     banner,
     playlist,
     newAlbum,
+    toplist,
   },
   data() {
     return {
@@ -181,8 +185,7 @@ export default {
   border: 1px solid pink;
   flex: auto;
 }
-
 .rec-content .new-album {
-  margin-top: 40px;
+  margin-top: 70px;
 }
 </style>

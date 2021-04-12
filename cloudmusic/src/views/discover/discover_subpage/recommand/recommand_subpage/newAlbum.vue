@@ -41,7 +41,6 @@
 import album from "../../../../../components/album.vue";
 export default {
   created() {
-    // console.log(this.ten_albums);
   },
   components: {
     album,
@@ -93,7 +92,6 @@ export default {
         this.istransition = true;
         this.activeIndex--;
       }
-      console.log(this.activeIndex);
     },
     // 下一张
     next() {
@@ -108,7 +106,6 @@ export default {
         this.istransition = true;
         this.activeIndex++;
       }
-      console.log(this.activeIndex);
     },
   },
 };
@@ -116,7 +113,6 @@ export default {
 
 <style scoped>
 .wrapper {
-  height: 400px;
   margin-bottom: 50px;
 }
 /* 热门推荐顶部信息 */
