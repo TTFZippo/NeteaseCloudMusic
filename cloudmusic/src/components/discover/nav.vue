@@ -56,7 +56,8 @@ export default {
 }
 .nav-container {
   width: 1100px;
-  padding-left: 21%;
+  padding-left: 200px;
+  box-sizing: border-box;
   margin: 0 auto;
   padding-bottom: 3px;
 }

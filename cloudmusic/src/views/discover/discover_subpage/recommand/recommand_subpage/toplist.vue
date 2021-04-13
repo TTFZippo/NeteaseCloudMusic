@@ -26,9 +26,9 @@
         </header>
         <ol>
           <li v-for="(songItem, songIndex) in toplistDetail[index]" :key="songIndex" class="song">
-            <div class="oper-left">
-              <span class="songIndex">{{songIndex+1}}</span>
-              <span class="songName">{{songItem.name}}</span>
+            <div class="oper-left" :class="{'red': songIndex < 3}">
+              <span class="songIndex" href="javascript:;">{{songIndex+1}}</span>
+              <a class="songName" href="javascript:;">{{songItem.name}}</a>
             </div>
             <div class="oper">
               <a href="javacsript:;" title="播放" class="play"></a>
@@ -37,6 +37,9 @@
             </div>
           </li>
         </ol>
+        <a class="checkall" href="javascript:;">
+          查看全部>
+        </a>
       </div>
     </div>
   </div>
@@ -149,19 +152,18 @@ export default {
   cursor: pointer;
 }
 
-
 .billboard-container {
-  /* border: 1px solid black; */
   display: flex;
   justify-content: space-between;
   background-color: rgb(244, 244, 244);
 }
 .billboard-container .billboard {
-  padding: 20px 0 0 19px;
-  border: 1px solid red;
+  padding: 20px 0 0 0;
+  border: 1px solid rgba(0, 0, 0, .2);
   flex:  1 1 33.3%;
 }
 .billboard-container .billboard header{
+  padding-left: 10px;
   display: flex;
   position: relative;
 }
@@ -171,7 +173,7 @@ export default {
   width: 80px;
   height: 80px;
   top: 0;
-  left: 0;
+  left: 10px;
   background-image: url('../../../../../assets/icon/coverall.png');
   background-position: -145px -57px;
 }
@@ -212,14 +214,42 @@ export default {
   height: 80px;
 }
 .billboard-container .billboard ol {
+  margin-top: 14px;
   list-style: none;
 }
 .billboard ol .song {
+  padding: 5px 0 5px 15px;
   display: flex;
+}
+.billboard ol .song:nth-child(2n+1) {
+  background-color: rgb(232, 232, 232);
 }
 /* 鼠标放上时出现 */
 .billboard ol .song:hover .oper{
   display: flex;
+}
+.billboard ol .oper-left {
+  font-size: 13px;
+  line-height: 20px;
+}
+.billboard ol .oper-left a{
+  color: black;
+  text-decoration: none;
+}
+.billboard ol .oper-left a:hover {
+  text-decoration: underline;
+}
+.billboard ol .oper-left .songIndex {
+  margin-right: 8px;
+}
+.billboard ol .oper-left.red .songIndex{
+  color: #c10d0c;
+}
+.billboard ol .oper-left {
+  width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .billboard ol .oper {
   display: flex;
@@ -251,12 +281,20 @@ export default {
 .billboard ol .oper a.collect:hover {
   background-position: -297px -288px;
 }
-.billboard ol .oper-left {
-  width: 150px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
 
+.billboard .checkall {
+  padding: 5px 15px 5px 0;
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  text-align: right;
+  background-color: rgb(232, 232, 232);
+  text-decoration: none;
+  font-size: 12px;
+  color: black;
+}
+.billboard .checkall:hover {
+  text-decoration: underline;
+}
 
 </style>

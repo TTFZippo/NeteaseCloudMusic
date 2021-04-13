@@ -42,7 +42,9 @@
           <toplist></toplist>
         </div>
         <!-- 右边部分 -->
-        <aside class="aside"></aside>
+        <aside class="aside">
+          <recd-aside></recd-aside>
+        </aside>
       </div>
     </main>
 
@@ -56,16 +58,21 @@ import banner from "../../../../components/discover/banner.vue"
 import playlist from "../../../../components/playlist.vue";
 import newAlbum from "./recommand_subpage/newAlbum.vue"
 import toplist from './recommand_subpage/toplist.vue'
+import aside from './recommand_subpage/aside.vue'
 export default {
   created() {
     this.getAllPlaylists();
     this.getAllAlbums();
+    this.request.get('/toplist/artist').then(result => {
+      console.log(result);
+    })
   },
   components: {
     banner,
     playlist,
     newAlbum,
     toplist,
+    'recd-aside': aside
   },
   data() {
     return {
@@ -188,4 +195,5 @@ export default {
 .rec-content .new-album {
   margin-top: 70px;
 }
+
 </style>
