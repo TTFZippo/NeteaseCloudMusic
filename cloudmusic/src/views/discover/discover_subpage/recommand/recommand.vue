@@ -120,7 +120,7 @@ export default {
   padding: 20px 15px;
   box-sizing: border-box;
   width: 730px;
-  border: 1px solid pink;
+  border: 1px solid rgba(0, 0, 0, .1);
 }
 .content .rec-content .playlist-wrapper {
   display: flex;
@@ -189,7 +189,7 @@ export default {
 }
 
 .content .aside {
-  border: 1px solid pink;
+  border: 1px solid rgba(0, 0, 0, .1);
   flex: auto;
 }
 .rec-content .new-album {

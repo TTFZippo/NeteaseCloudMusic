@@ -151,6 +151,9 @@ export default {
   text-align: center;
   font-size: 12px;
 }
+.user-info a:hover{
+  background-position: -110px -195px;
+}
 .anchor,
 .settled-artists {
   /* width: calc(100% - 100px); */
