@@ -49,13 +49,16 @@
     </main>
 
     <!-- 底部公司信息，服务条款 -->
-    <footer></footer>
+    <footer>
+      <my-foooter></my-foooter>
+    </footer>
   </div>
 </template>
 
 <script>
 import banner from "../../../../components/discover/banner.vue"
 import playlist from "../../../../components/playlist.vue";
+import footer from '../../../../components/footer/footer.vue'
 import newAlbum from "./recommand_subpage/newAlbum.vue"
 import toplist from './recommand_subpage/toplist.vue'
 import aside from './recommand_subpage/aside.vue'
@@ -72,7 +75,8 @@ export default {
     playlist,
     newAlbum,
     toplist,
-    'recd-aside': aside
+    'recd-aside': aside,
+    'my-foooter': footer
   },
   data() {
     return {
@@ -109,6 +113,9 @@ export default {
   margin: 0;
   padding: 0;
 }
+.main {
+  background-color: rgb(245, 245, 245);
+}
 .main .content {
   display: flex;
   justify-content: space-between;
@@ -117,7 +124,8 @@ export default {
 }
 
 .content .rec-content {
-  padding: 20px 15px;
+  padding: 30px 15px;
+  padding-bottom: 40px;
   box-sizing: border-box;
   width: 730px;
   border: 1px solid rgba(0, 0, 0, .1);
