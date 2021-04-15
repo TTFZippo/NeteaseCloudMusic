@@ -66,9 +66,9 @@ export default {
   created() {
     this.getAllPlaylists();
     this.getAllAlbums();
-    this.request.get('/toplist/artist').then(result => {
-      console.log(result);
-    })
+    // this.request.get('/toplist/artist').then(result => {
+    //   console.log(result);
+    // })
   },
   components: {
     banner,

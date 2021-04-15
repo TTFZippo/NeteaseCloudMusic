@@ -7,12 +7,12 @@
         <nav-menu :listData="toplistTags"></nav-menu>
       </aside>
       <!-- 左侧主内容 -->
-      <div>
-
-      </div>
+      <main>
+        <list-content :currentListData="currentListData"></list-content>
+      </main>
     </main>
     <footer>
-      <!-- <my-footer></my-footer> -->
+      <my-footer></my-footer>
     </footer>
   </div>
 </template>
@@ -20,17 +20,26 @@
 <script>
 import footer from '../../../../components/footer/footer.vue'
 import navMenu from './toplist_subpage/navMenu.vue'
+import listContent from './toplist_subpage/listContent.vue'
 export default {
   created() {
     this.getToplistTags();
+    this.getToplistData();
+    this.request.get('/song/detail?ids=1836438977').then(result => {
+      // console.log('我是歌手',result);
+    })
+    // console.log();
   },
   components: {
     'my-footer': footer,
-    'nav-menu': navMenu
+    'nav-menu': navMenu,
+    'list-content': listContent
   },
   data () {
     return {
-      toplistTags: []
+      toplistTags: [],
+      currentListId: '',
+      currentListData: {},
     }
   },
   methods: {
@@ -48,7 +57,17 @@ export default {
     // 根据歌单id获取单个榜单的详细信息
     // id-default: 19723756(飙升榜)
     async getToplistData(id=19723756) {
-      const result = await this.request.get(`/playlist/detail?id=${id}`);
+      let result = await this.request.get(`/playlist/detail?id=${id}`);
+      console.log(result);
+      let {coverImgUrl, updateTime, name, subscribedCount, shareCount, commentCount, playCount, tracks} = result.playlist;
+      let updateFrequency = this.toplistTags.filter((item, index, array) => item.id==id)[0].updateFrequency;
+      this.currentListData = {coverImgUrl, updateTime, name, subscribedCount, shareCount, commentCount, tracks, playCount, updateFrequency};
+    }
+  },
+  watch: {
+    $route(newValue) {
+      let newId = newValue.query.id;
+      this.getToplistData(newId);
     }
   }
 }
