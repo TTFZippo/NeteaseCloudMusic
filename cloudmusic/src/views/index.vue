@@ -2,6 +2,7 @@
 <template>
   <div class="index">
     <nav-bar></nav-bar>
+    <my-dialog></my-dialog>
     <router-view></router-view>
   </div>
 </template>

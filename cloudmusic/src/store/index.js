@@ -6,7 +6,9 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     // dialog当前页
-    dialog_currPage: 'index'
+    dialog_currPage: 'index',
+    // 账户信息
+    account: {}
   },
   mutations: {
     /**
@@ -15,7 +17,9 @@ export default new Vuex.Store({
      */
     changeDialogState(state, next='index') {
       state.dialog_currPage = next;
-    }
+    },
+
+ 
   },
   actions: {
   },

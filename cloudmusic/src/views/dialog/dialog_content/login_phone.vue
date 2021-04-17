@@ -35,6 +35,9 @@ export default {
         })
         .then((result) => {
           console.log(result);
+          // 将头像和名称存储起来
+          window.sessionStorage.setItem('avatarUrl', result.profile.avatarUrl);
+          window.sessionStorage.setItem('nickname', result.profile.nickname);
         })
         .catch((err) => {
           console.log(err);

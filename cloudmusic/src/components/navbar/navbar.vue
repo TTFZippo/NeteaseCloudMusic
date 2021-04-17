@@ -66,7 +66,7 @@
         </div>
         <div class="creator-center">创作者中心</div>
         <div class="login">
-          <a href="javascript:;">登录</a>
+          <a href="javascript:;" @click="login">登录</a>
         </div>
       </div>
     </nav>
@@ -99,7 +99,9 @@ export default {
     'search-box': searchBox
   },
   methods: {
-    
+    login() {
+      
+    }
   }
 };  
 </script>

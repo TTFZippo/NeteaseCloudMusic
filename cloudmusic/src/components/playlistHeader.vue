@@ -1,6 +1,6 @@
 <!-- 歌单的首部（介绍） -->
 <template>
-  <div class="wrapper">
+  <div class="playlistheader-wrapper">
     <div class="img-container">
       <img :src="currentListData.coverImgUrl" alt="">
       <span class="mask"></span>
@@ -60,7 +60,7 @@ export default {
     
   },
   created () {
-    console.log(this.currentListData);
+    // console.log(this.currentListData);
   },
   data () {
     return {
@@ -80,8 +80,9 @@ export default {
   margin: 0;
   padding: 0;
 }
-.wrapper {
-  padding: 40px 0 40px 40px;
+.playlistheader-wrapper {
+  margin-bottom: 50px;
+  margin: 10px 0 50px 0;
   display: flex;
 }
 .img-container {

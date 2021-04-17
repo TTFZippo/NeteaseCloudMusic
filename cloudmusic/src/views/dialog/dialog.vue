@@ -1,6 +1,6 @@
 <!-- 集成登录、注册功能的dialog -->
 <template>
-  <div>
+  <div class="dialog">
     <dialog-frame>
       <template v-slot:title>
         <div>
@@ -55,5 +55,8 @@ export default {
 </script>
 
 <style scoped>
-
+.dialog {
+  background-color: white;
+  z-index: 10;
+}
 </style>

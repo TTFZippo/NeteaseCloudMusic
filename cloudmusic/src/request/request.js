@@ -1,5 +1,6 @@
 import axios from 'axios'
-
+// cooike
+axios.defaults.withCredentials = true
 const request = axios.create({
   baseURL: 'http://localhost:3000',
   headers: {
@@ -11,7 +12,7 @@ const request = axios.create({
 // 请求拦截
 // request.interceptors.request.user(config => {
 //   config.data = {
-    
+//     withCredentials: true
 //   }
 //   return config;
 // })
