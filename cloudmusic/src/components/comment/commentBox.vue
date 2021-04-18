@@ -57,7 +57,6 @@ export default {
     async deleteComment(commentId, type) {
       let id = this.id;
       const result = await this.request.get(`/comment?t=0&type=${type}&id=${id}&commentId=${commentId}`);
-      console.log(result);
     }
   }
 }

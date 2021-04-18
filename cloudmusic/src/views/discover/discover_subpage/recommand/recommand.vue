@@ -27,13 +27,13 @@
               </span>
             </div>
             <div class="playlist-wrapper">
-              <playlist
+              <playlistBox
                 :coverImgUrl="item.coverImgUrl"
                 :name="item.name"
                 :palyCount="item.playCount"
                 v-for="item in playlists"
                 :key="item.id"
-              ></playlist>
+              ></playlistBox>
             </div>
           </div>
           <!-- 新碟上架 -->
@@ -57,7 +57,7 @@
 
 <script>
 import banner from "../../../../components/discover/banner.vue"
-import playlist from "../../../../components/playlist.vue";
+import playlistBox from "../../../../components/playlistBox.vue";
 import footer from '../../../../components/footer/footer.vue'
 import newAlbum from "./recommand_subpage/newAlbum.vue"
 import toplist from './recommand_subpage/toplist.vue'
@@ -72,7 +72,7 @@ export default {
   },
   components: {
     banner,
-    playlist,
+    playlistBox,
     newAlbum,
     toplist,
     'recd-aside': aside,

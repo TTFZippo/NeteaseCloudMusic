@@ -18,7 +18,6 @@ export default {
       required: false
     },
     totalCount: {
-      type: Number,
       required: true
     }
   },
@@ -72,6 +71,12 @@ export default {
       if(item!='...') {
         this.activedIndex = item;
       }
+    }
+  },
+  watch: {
+    activedIndex(newValue) {
+      console.log(newValue);
+      this.$emit('activedIndexChange', newValue);
     }
   }
 }

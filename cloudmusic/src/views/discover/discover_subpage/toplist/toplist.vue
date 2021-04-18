@@ -44,6 +44,7 @@ export default {
       allComment: {
         comment_by_hot: {},
         comment_by_time: {},
+        // 
         totalCount: ''
       },
       // 资源id
@@ -72,11 +73,17 @@ export default {
     },
 
     // 获取歌单评论
-    async getToplistComments(id=19723756, pageNo=1) {
+    async getToplistComments(id=19723756, pageNo=1, cursor) {
       let timestamp = new Date().getTime();
-      // 按时间排序
-      let  result_by_time = await this.request.get(`/comment/new?type=2&id=${id}&sortType=3&pageSize=20&${timestamp}`);
-      this.allComment.comment_by_time = result_by_time.data;
+      // 当sortType为3时且页数不是第一页时需传入,值为上一条数据的time
+      if(cursor) {
+        let  result_by_time = await this.request.get(`/comment/new?type=2&pageNo=${pageNo}&id=${id}&sortType=3&pageSize=20&${timestamp}&cursor=${cursor}`);
+        this.allComment.comment_by_time = result_by_time.data;
+      } else {
+        // 按时间排序
+        let  result_by_time = await this.request.get(`/comment/new?type=2&pageNo=${pageNo}&id=${id}&sortType=3&pageSize=20&${timestamp}`);
+        this.allComment.comment_by_time = result_by_time.data;
+      }
       // 按热度排序
       let  result_by_hot = await this.request.get(`/comment/new?type=2&pageNo=${pageNo}&id=${id}&sortType=2&pageSize=20&${timestamp}`);
       this.allComment.comment_by_hot = result_by_hot.data;

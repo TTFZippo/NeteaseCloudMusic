@@ -38,7 +38,8 @@
 
     <!-- 热门评论和最新评论 -->
     <div class="comment-hot_new">
-      <div class="comment-hot">
+      <!-- 只有在分页1出现 -->
+      <div class="comment-hot" v-if="activedIndex==1">
         <h3>精彩评论</h3>
         <comment-box :commentData="comments_by_hot[index]" :id="id" v-for="(item, index) in comments_by_hot" :key="index"></comment-box>
       </div>
@@ -49,8 +50,7 @@
     </div>
 
     <!-- 分页 -->
-
-    <pagenation :totalCount=202884></pagenation>
+    <pagenation :totalCount="allComment.totalCount" @activedIndexChange="changePage"></pagenation>
 
   </div>
 </template>
@@ -61,7 +61,6 @@ import pagenation from '../../../../../components/pagenation/pagenation.vue'
 export default {
   created () {
     this.avatarUrl = window.sessionStorage.getItem('avatarUrl');
-    console.log(this.allComment);
   },
   components: {
     'comment-box': commentBox,
@@ -82,7 +81,8 @@ export default {
       avatarUrl: '',
       defaultUrl: require('../../../../../assets/images/default_avatar.jpg'),
       // 评论内容
-      commentContent: ''
+      commentContent: '',
+      activedIndex: 1
     }
   },
   computed: {
@@ -97,13 +97,24 @@ export default {
     // 最新评论数据
     comments_by_time() {
       return this.allComment.comment_by_time.comments;
+    },
+    // 记录上一条数据的time
+    cursor() {
+      let length = this.allComment.comment_by_time.comments.length;
+      return this.allComment.comment_by_time.comments[length-1].time;
     }
   },
   methods: {
     // 提交评论
     post() {
       this.request.get(`/comment?t=1&type=2&id=19723756&content=${this.commentContent}`);
-      this.getToplistComments(this.id);
+      this.getToplistComments(this.id, this.activedIndex, this.cursor);
+    },
+
+    // 根据分页刷新数据
+    changePage(activedIndex) {
+      this.activedIndex = activedIndex;
+      this.getToplistComments(this.id, activedIndex, this.cursor);
     }
   },
   inject: ['getToplistComments']

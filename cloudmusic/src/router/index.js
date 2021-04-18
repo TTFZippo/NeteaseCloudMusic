@@ -8,7 +8,7 @@ const toplist = () => import ('../views/discover/discover_subpage/toplist/toplis
 const album = () => import ('../views/discover/discover_subpage/album.vue')
 const artist = () => import ('../views/discover/discover_subpage/artist.vue')
 const djradio = () => import ('../views/discover/discover_subpage/djradio.vue')
-const playlist = () => import ('../views/discover/discover_subpage/playlist.vue')
+const playlist = () => import ('../views/discover/discover_subpage/playlist/playlist.vue')
 
 
 Vue.use(VueRouter)
