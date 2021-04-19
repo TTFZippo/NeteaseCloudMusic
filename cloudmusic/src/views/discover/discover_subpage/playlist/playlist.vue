@@ -2,7 +2,7 @@
 <template> 
   <div>
     <div class="playlist-container" @click.capture="categoriesDisappar">
-      <category :allCategories="allCategories" :isCategoriesDisappar="isCategoriesDisappar"></category>
+      <category :allCategories="allCategories" :isCategoriesDisappar="isCategoriesDisappar" @currentCatChange="changeCat"></category>
       <div class="playlist-wrapper">
         <playlist-box
         class="playlist-box"
@@ -13,7 +13,7 @@
         :palyCount="item.playCount"
         ></playlist-box>
       </div>
-      <pagenation :pageSize=35 :totalCount="totalCount"></pagenation>
+      <pagenation :pageSize=35 :totalCount="totalCount" class="pagenation" @activedIndexChange="changePage"  :isChangeCat="isChangeCat"></pagenation>
     </div>
     <footer>
         <my-footer></my-footer>
@@ -45,7 +45,10 @@ export default {
       // 歌单具体信息
       playlists: [],
       // 该分类歌单总数
-      totalCount: ''
+      totalCount: '',
+      currentCat: '',
+      // 是否切换分类
+      isChangeCat: false
     }
   },
   methods: {
@@ -60,25 +63,28 @@ export default {
       this.isCategoriesDisappar = !this.isCategoriesDisappar;
     },
     // 根据category获取歌单
-    async getPlaylists(cat='全部') {
-      let result = await this.request.get(`/top/playlist?limit=35&order=hot&cat=${cat}`);
+    async getPlaylists(cat='全部', currentPage=1) {
+      let offset = (currentPage-1) * 35;
+      let result = await this.request.get(`/top/playlist?limit=35&order=hot&cat=${cat}&offset=${offset}`);
       this.totalCount = result.total;
       result = result.playlists;
+      this.playlists = [];
       for (const [, item] of result.entries()) {
         let { coverImgUrl, name, playCount, id } = item;
         this.playlists.push({ coverImgUrl, name, playCount, id });
       }
       console.log(result);
     },
-
-    // async getAllPlaylists() {
-    //   let result = await this.request.get("/top/playlist?limit=8&order=hot");
-    //   result = result.playlists;
-    //   for (const [, item] of result.entries()) {
-    //     let { coverImgUrl, name, playCount, id } = item;
-    //     this.playlists.push({ coverImgUrl, name, playCount, id });
-    //   }
-    // },
+    // 分页
+    changePage(currentPage) {
+      this.getPlaylists(this.currentCat, currentPage);
+    },
+    // 根据分类切换
+    changeCat(currentCat) {
+      this.isChangeCat = !this.isChangeCat; 
+      this.currentCat = currentCat;
+      this.getPlaylists(currentCat, 1);
+    }
   }
 }
 
@@ -104,5 +110,10 @@ export default {
 }
 .playlist-wrapper .playlist-box {
   margin: 10px 10px;
+}
+
+/* 分页 */
+.pagenation {
+  margin: 30px auto;
 }
 </style>

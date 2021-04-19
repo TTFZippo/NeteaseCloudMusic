@@ -6,7 +6,7 @@ import discover from '../views/discover/discover.vue'
 const recommand = () => import ('../views/discover/discover_subpage/recommand/recommand.vue')
 const toplist = () => import ('../views/discover/discover_subpage/toplist/toplist.vue')
 const album = () => import ('../views/discover/discover_subpage/album.vue')
-const artist = () => import ('../views/discover/discover_subpage/artist.vue')
+const artist = () => import ('../views/discover/discover_subpage/artist/artist.vue')
 const djradio = () => import ('../views/discover/discover_subpage/djradio.vue')
 const playlist = () => import ('../views/discover/discover_subpage/playlist/playlist.vue')
 

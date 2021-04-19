@@ -19,6 +19,11 @@ export default {
     },
     totalCount: {
       required: true
+    },
+    // 如果分类变了，那么activedIndex要变成1
+    isChangeCat: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
@@ -77,6 +82,9 @@ export default {
     activedIndex(newValue) {
       console.log(newValue);
       this.$emit('activedIndexChange', newValue);
+    },
+    isChangeCat() {
+      this.activedIndex = 1;
     }
   }
 }

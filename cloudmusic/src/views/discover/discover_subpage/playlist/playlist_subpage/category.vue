@@ -1,7 +1,7 @@
 <!-- 歌单顶部分类部分 -->
 <template>
   <div class="label">
-    <h1>{{title}}</h1>
+    <h1>{{currentCat}}</h1>
     <div class="categories-wrapper">
       <a href="javascript:;" class="choose-cat" @click="isCategoriesShow_in_category = !isCategoriesShow_in_category">
         <i>
@@ -9,13 +9,13 @@
           <em></em>
         </i>
       </a>
-      <div class="categories" :class="{'categoriesShow': isCategoriesShow_in_category}"   @click="isCategoriesShow_in_category = true">
+      <div class="categories" :class="{'categoriesShow': isCategoriesShow_in_category}"   @click="isCategoriesShow_in_category = true; isCategoriesShow_in_category = false">
         <div class="tri-icon">
           <i></i>
         </div>
 
         <div class="all-style-wrapper">
-          <a href="javascript:;" class="all-style">全部风格</a>
+          <a href="javascript:;" class="all-style"  @click="currentCat = '全部'">全部风格</a>
         </div>
         
         <div>
@@ -27,7 +27,7 @@
               <h1 class="title">{{item}}</h1>
             </div>
             <div class="sub-wrapper"> 
-              <a v-for="(item_sub, index_sub) in sortedCategories[index]" :key="index_sub" href="javascript:;">
+              <a v-for="(item_sub, index_sub) in sortedCategories[index]" :key="index_sub" href="javascript:;" @click="currentCat = item_sub.name; isCategoriesShow_in_category = false">
                 {{item_sub.name}}
                 <span class="line">|</span> 
                 </a>
@@ -73,7 +73,8 @@ export default {
     return {
         // 控制分类标签出现(点击分类按钮时生效)
         isCategoriesShow_in_category: false,
-        title: '全部'
+        // 当前选中的分类
+        currentCat: '全部'
       }
   },
   methods: {
@@ -82,6 +83,9 @@ export default {
   watch: {
     isCategoriesDisappar(newValue) {
       this.isCategoriesShow_in_category = false;
+    },
+    currentCat(newValue) {
+      this.$emit('currentCatChange', newValue);
     }
   }
 }
