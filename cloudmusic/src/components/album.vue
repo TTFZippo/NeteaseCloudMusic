@@ -1,6 +1,6 @@
 <!-- 专辑（碟） -->
 <template>
-  <div class="album-wrapper">
+  <div class="album-wrapper" :class="{'large': size=='large'}">
     <div class="cover">
       <img :src="albumData.picUrl" alt="">
       <a href="javascript:;" class="mask"></a>
@@ -14,11 +14,14 @@
 <script>
 export default {
   created () {
-    // console.log(this.albumData);
   },
   props: {
     albumData: {
       type: Object
+    },
+    size: {
+      type: String,
+      default: 'small'
     }
   },
   computed: {
@@ -26,8 +29,7 @@ export default {
     artists() {
       let allArtists = "";
       this.albumData.artists.forEach((item, index) => {
-        // console.log(index);
-        allArtists += index==0 ? `${item.name}` : ` \\ ${item.name}`
+        allArtists += index==0 ? `${item.name}` : ` \/ ${item.name}`
       })
       return allArtists
     }
@@ -50,6 +52,29 @@ export default {
   width: 118px;
   height: 150px;
 }
+/* 大的专辑封面(新碟上架部分) */
+.album-wrapper.large {
+  width: 153px;
+  height: 178px;
+}
+.album-wrapper.large .cover {
+  width: 130px;
+  height: 130px;
+}
+.album-wrapper.large .cover img {
+  width: 100%;
+  height: 100%;
+}
+.album-wrapper.large .cover .mask {
+  width: 153px;
+  height: 130px;
+  background-position: 0 -845px;
+}
+.album-wrapper.large .cover .icon-play {
+  left: 105px;
+}
+
+
 .album-wrapper .cover {
   position: relative;
 }

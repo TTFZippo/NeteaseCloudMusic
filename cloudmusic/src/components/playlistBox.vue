@@ -1,8 +1,8 @@
 <!-- 专辑（碟）box -->
 <template>
-  <div class="playlist">
+  <div class="playlist" :class="{'large': size=='big'}">
     <div class="imagebox">
-      <img :src="coverImgUrl" alt="" />
+      <img :src="coverImgUrl" alt=""/>
       <a href="javascript:;" class="mask"></a>
       <div class="bottom">
         <span class="headphone"></span>
@@ -50,8 +50,11 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
+  background-position: 0 0;
+  background-image: url('../assets/icon/coverall.png');
   text-decoration: none;
 }
+
 .playlist .bottom {
   display: flex;
   position: absolute;

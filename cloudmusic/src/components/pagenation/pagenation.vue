@@ -80,7 +80,6 @@ export default {
   },
   watch: {
     activedIndex(newValue) {
-      console.log(newValue);
       this.$emit('activedIndexChange', newValue);
     },
     isChangeCat() {
