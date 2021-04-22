@@ -58,7 +58,8 @@
           </div>
         </div>
       </div>
-      <djradio-by-cat v-else></djradio-by-cat>
+      <!-- 点击情感调频等分类出现的子页面 -->
+      <djradio-by-cat v-else :categorySubPageData="categorySubPageData"></djradio-by-cat>
     </div>
     <footer>
       <my-footer></my-footer>
@@ -83,8 +84,8 @@ export default {
     this.getAllcategories();
     this.getAllrecPrograms();
     this.getAllRankedPrograms();
-    this.getRankedDjs();
     this.getRadioPageRecommand();
+    this.changePage()
   },
   data() {
     return {
@@ -97,8 +98,11 @@ export default {
       recRadiosId: [2,6,5,3,2001,11],
       recRadiosName: ['音乐故事','助眠解压','侃侃而谈','情感调频','创作翻唱', '其他'],
       recRadioData: [],
-      // 根据分类子页面数据
-      categorySubPageData: {}
+      // 根据分类获得的子页面数据
+      categorySubPageData: {
+        recommandRadios: [],
+        rankedRadios: []
+      }
     };
   },
   methods: {
@@ -119,12 +123,21 @@ export default {
         categoryId: 88888,
         categoryName: "我要做主播"
       });
-      // console.log(this.categoriesData);
     },
 
     // 切换分类
-    changeCategory(item) {
-      this.activeCategory = item.categoryName;
+    async changeCategory(category) {
+      this.activeCategory = category.categoryName;
+      let targetCategory = this.categoriesData.filter((item, index, array) => item.categoryName == category.categoryName)[0];
+      let result = await this.request.get(`/dj/recommend/type?type=${targetCategory.categoryId}`);
+      this.categorySubPageData.recommandRadios = result.djRadios;
+    },
+
+    // 切换分页
+    async changePage(offset=0, limit=22, cateId=3) {
+      let result = await this.request.get(`/dj/radio/hot?cateId=${cateId}`);
+      this.categorySubPageData.rankedRadios = result;
+      // console.log(result);
     },
 
     // 推荐节目
@@ -145,12 +158,6 @@ export default {
         let {rank, lastRank, score, program: {coverUrl, name, dj: {brand}}} = item;
         this.rankedPrograms.push({rank, lastRank, score, coverUrl, name, brand})
       }
-      // console.log(this.rankedPrograms);
-    },
-
-    // 分类优秀电台
-    async getRankedDjs(type=3) {
-      let result = await this.request.get(`/dj/recommend/type?type=${type}`);
     },
 
     // 获取主播电台页的推荐电台（每组四个）
@@ -158,7 +165,6 @@ export default {
       for(let i = 0; i < this.recRadiosId.length; i++) {
         let result = await this.request.get(`/dj/recommend/type?type=${this.recRadiosId[i]}`);
         this.recRadioData.push(result);
-        // console.log(result);
       }
     }
   },

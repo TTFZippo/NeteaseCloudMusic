@@ -33,6 +33,7 @@
                 :palyCount="item.playCount"
                 v-for="item in playlists"
                 :key="item.id"
+                :id="item.id"
               ></playlistBox>
             </div>
           </div>

@@ -11,6 +11,7 @@
         :name="item.name"
         :coverImgUrl="item.coverImgUrl"
         :palyCount="item.playCount"
+        :id="item.id"
         ></playlist-box>
       </div>
       <pagenation :pageSize=35 :totalCount="totalCount" class="pagenation" @activedIndexChange="changePage"  :isChangeCat="isChangeCat"></pagenation>

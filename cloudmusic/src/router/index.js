@@ -9,7 +9,7 @@ const album = () => import ('../views/discover/discover_subpage/album/album.vue'
 const artist = () => import ('../views/discover/discover_subpage/artist/artist.vue')
 const djradio = () => import ('../views/discover/discover_subpage/djradio/djradio.vue')
 const playlist = () => import ('../views/discover/discover_subpage/playlist/playlist.vue')
-
+const playlistDetail = () => import ('../views/playlistDetail/playlistDetail.vue')
 
 Vue.use(VueRouter)
 
@@ -47,6 +47,11 @@ const routes = [
         path: 'playlist',
         component: playlist
       },
+      {
+        // 歌单详情页
+        path: 'playlist/detail',
+        component: playlistDetail
+      }
     ]
   }
 ]

@@ -1,6 +1,6 @@
 <!-- 专辑（碟）box -->
 <template>
-  <div class="playlist" :class="{'large': size=='big'}">
+  <div class="playlist"  @click="gotoDetailPage()">
     <div class="imagebox">
       <img :src="coverImgUrl" alt=""/>
       <a href="javascript:;" class="mask"></a>
@@ -26,12 +26,26 @@ export default {
     },
     palyCount: {
       type: Number
+    },
+    id: {
+      type: Number,
+      required: true
     }
   },
   created() {
   },
   data() {
     return {};
+  },
+  methods: {
+    gotoDetailPage() {
+      this.$router.push({
+        path: 'playlist/detail',
+        query: {
+          id: this.id
+        }
+      })
+    }
   }
 };
 </script>
