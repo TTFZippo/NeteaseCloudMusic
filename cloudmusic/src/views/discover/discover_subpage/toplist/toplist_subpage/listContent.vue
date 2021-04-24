@@ -1,7 +1,7 @@
 <!-- 排行榜的主内容 -->
 <template>
   <div class="playlistmain-wrapper">
-    <playlist-header :currentListData="currentListData"></playlist-header>
+    <playlist-header :currentListData="currentListData" :isDetail="isDetail"></playlist-header>
     <div class="label">
       <div>
         <h2>歌曲列表</h2>
@@ -25,6 +25,10 @@ export default {
   props: {
     currentListData: {
       type: Object
+    },
+    // 是否是歌单详情页
+    isDetail: {
+      type: Boolean
     }
   },
   created () {

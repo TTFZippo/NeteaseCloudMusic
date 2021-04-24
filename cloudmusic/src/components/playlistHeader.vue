@@ -1,21 +1,27 @@
 <!-- 歌单的首部（介绍） -->
 <template>
-  <div class="playlistheader-wrapper">
+  <div class="playlistheader-wrapper" :class="{'detail': isDetail}">
     <div class="img-container">
       <img :src="currentListData.coverImgUrl" alt="">
       <span class="mask"></span>
     </div>
     <div class="description">
       <div class="list-name">
+        <i v-if="isDetail" class="detail-icon"></i>
         <h2>
           {{currentListData.name}}  
         </h2>
       </div>
-      <div class="update-time">
+      <div class="update-time" v-if="!isDetail">
         <i></i>
         <span>最近更新：{{updateTime}}</span>
         <span class="updatefrequency">({{currentListData.updateFrequency}})</span>
-        
+      </div>
+      <!-- 歌单详情的创建者，创建时间 -->
+      <div class="create" v-else>
+        <img class="creater-avatar" :src="currentListData.avatarUrl" alt="" align="absmiddle">
+        <span class="creater">{{currentListData.nickname}}</span>
+        <span class="create-time">{{createTime}}创建</span>
       </div>
       <div class="operation">
         <a href="javascript:;" class="play">
@@ -46,6 +52,16 @@
           </i>
         </a>
       </div>
+      <!-- 歌单详情的标签 -->
+      <div v-if="isDetail" class="tags">
+        <span>标签：</span>
+        <span v-for="item in currentListData.tags" :key="item" class="tag">{{item}}</span>
+      </div>
+      <!-- 歌单详情的介绍 -->
+      <div v-if="isDetail" class="intro">
+        <span>介绍：</span>
+        <span>{{currentListData.description}}</span>
+      </div>
     </div>
   </div>
 </template>
@@ -57,7 +73,10 @@ export default {
     currentListData: {
       type: Object
     },
-    
+    // 是否是详情页的歌单
+    isDetail: {
+      type: Boolean
+    }
   },
   created () {
     // console.log(this.currentListData);
@@ -69,6 +88,9 @@ export default {
   computed: {
     updateTime() {
       return  dateFormat(this.currentListData.updateTime, 'm月d日')
+    },
+    createTime() {
+      return dateFormat(this.currentListData.createTime, 'Y年m月d日');
     }
   }
 }
@@ -130,6 +152,7 @@ export default {
   background-image: url('../assets/icon/icon.png');
   vertical-align: middle;
 }
+/* 操作按钮 */
 .operation a {
   padding: 0 5px 0 0;
   display: inline-block;
@@ -265,5 +288,71 @@ export default {
   padding-right: 2px;
   padding-left: 30px;
   font-style: normal;
+}
+/* 歌单详情 */
+.detail .img-container {
+  width: 208px;
+  height: 208px;
+}
+.detail .img-container img {
+  width: 208px;
+  height: 208px;
+}
+.detail .creater-avatar {
+  width: 35px;
+  height: 35px;
+}
+.detail .detail-icon {
+  display: inline-block;
+  width: 54px;
+  height: 24px;
+  background-image: url('../assets/icon/icon.png');
+  background-position: 0 -243px;
+  vertical-align: top;
+}
+.detail .description  h2 {
+  display: inline-block;
+}
+/* 创建者 */
+.detail .create {
+  vertical-align: middle;
+  font-size: 12px;
+  margin: 10px 0 15px 0;
+}
+.detail .creater {
+  color: #0c73c2;
+  margin-left: 6px;
+  cursor: pointer;
+}
+.detail .creater:hover {
+  text-decoration: underline;
+}
+.detail .create-time {
+  color: #999;
+  margin-left: 30px;
+}
+.detail .tags,
+.detail .intro {
+  margin: px 0;
+  font-size: 12px;
+  color: #666;
+}
+.detail .tags {
+  margin: 20px 0;
+  margin-bottom: 5px;
+}
+/* 标签 */
+.detail .tag {
+  display: inline-block;
+  padding: 1px 8px;
+  margin: 0 3px;
+  border: 1px solid rgba(0, 0, 0,  .1);
+  border-radius: 20px;
+  background-image: linear-gradient(rgb(249, 249, 249), rgb(240, 240, 240));
+  color: #999;
+  cursor: pointer;
+}
+.detail .tag:hover {
+  background-image: linear-gradient(rgb(255, 255, 255), rgb(250, 250, 250));
 }
 </style>

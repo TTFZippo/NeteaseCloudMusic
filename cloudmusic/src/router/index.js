@@ -10,7 +10,7 @@ const artist = () => import ('../views/discover/discover_subpage/artist/artist.v
 const djradio = () => import ('../views/discover/discover_subpage/djradio/djradio.vue')
 const playlist = () => import ('../views/discover/discover_subpage/playlist/playlist.vue')
 const playlistDetail = () => import ('../views/playlistDetail/playlistDetail.vue')
-
+const artistDetail = () => import ('../views/artistDetail/artistDetail.vue')
 Vue.use(VueRouter)
 
 const routes = [
@@ -51,6 +51,10 @@ const routes = [
         // 歌单详情页
         path: 'playlist/detail',
         component: playlistDetail
+      },
+      {
+        path: 'artist/detail',
+        component: artistDetail
       }
     ]
   }

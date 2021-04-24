@@ -1,16 +1,15 @@
 <!-- 歌曲表 -->
 <template>
 <div class="songlist-wrapper">
-  
   <table class="table">
-    <thead>
+    <thead v-if="!isArtistDetail">
       <span class="column-name index"></span>
       <span class="column-name title">标题</span>
       <span class="column-name duration">时长</span>
       <span class="column-name artist">歌手</span>
     </thead>
     <tbody class="tbody">
-        <song-item v-for="(item, index) in currentListData" :key="item.id+index" :songData="currentListData[index]" :index="index"></song-item>
+        <song-item v-for="(item, index) in currentListData" :key="index" :songData="currentListData[index]" :index="index"></song-item>
     </tbody>
   </table>
 </div>
@@ -24,6 +23,11 @@ export default {
   props: {
     currentListData: {
       type: Array
+    },
+    // 是否来自歌手详情页
+    isArtistDetail: {
+      type: Boolean,
+      default: false
     }
   },
   components: {
@@ -49,6 +53,7 @@ export default {
   width: 100%;
   border-spacing: 0;
   border-collapse: collapse;
+  overflow: hidden;
 }
 .table thead,
 .table .tbody {

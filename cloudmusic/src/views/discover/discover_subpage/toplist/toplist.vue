@@ -44,7 +44,7 @@ export default {
       allComment: {
         comment_by_hot: {},
         comment_by_time: {},
-        // 
+        // 总量
         totalCount: ''
       },
       // 资源id

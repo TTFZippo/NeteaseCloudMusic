@@ -101,7 +101,10 @@ export default {
     // 记录上一条数据的time
     cursor() {
       let length = this.allComment.comment_by_time.comments.length;
-      return this.allComment.comment_by_time.comments[length-1].time;
+      if(length > 0) {
+
+        return this.allComment.comment_by_time.comments[length-1].time ;
+      }
     }
   },
   methods: {
@@ -114,6 +117,7 @@ export default {
     // 根据分页刷新数据
     changePage(activedIndex) {
       this.activedIndex = activedIndex;
+      console.log('现在的位置',this.activedIndex);
       this.getToplistComments(this.id, activedIndex, this.cursor);
     }
   },

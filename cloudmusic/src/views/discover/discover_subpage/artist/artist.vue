@@ -15,7 +15,7 @@
       </header>
       <main class="artist-main">
         <div class="artist-box-wrapper">
-          <div class="artist-box" v-for="item in artistData_indexlt10" :key="item.id">
+          <div class="artist-box" v-for="item in artistData_indexlt10" :key="item.id" @click="gotoArtistDetail(item.id)">
               <div class="img-wrapper">
                 <img :src="item.img1v1Url" alt="">
                 <a class="mask"></a>
@@ -105,6 +105,16 @@ export default {
       result = result.artists;
       this.artistData = result;
       console.log(result);
+    },
+
+    // 跳转至歌手详情
+    gotoArtistDetail(id) {
+      this.$router.push({
+        path: 'artist/detail',
+        query: {
+          id
+        }
+      })
     }
   }
 }
@@ -188,6 +198,7 @@ export default {
   margin-bottom: 5px;
   width: 130px;
   height: 130px;
+  cursor: pointer;
 }
 .artist-box .img-wrapper img {
   width: 100%;
@@ -202,6 +213,12 @@ export default {
   height: 100%;
   background-image: url('../../../../assets/icon/coverall.png');
   background-position: 0 -680px;
+}
+.artistname {
+  cursor: pointer;
+}
+.artistname:hover {
+  text-decoration: underline;
 }
 
 /* 无图片的歌手部分 */
