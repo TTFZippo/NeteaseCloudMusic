@@ -28,7 +28,7 @@
           <li v-for="(songItem, songIndex) in toplistDetail[index]" :key="songIndex" class="song">
             <div class="oper-left" :class="{'red': songIndex < 3}">
               <span class="songIndex" href="javascript:;">{{songIndex+1}}</span>
-              <a class="songName" href="javascript:;">{{songItem.name}}</a>
+              <a class="songName" href="javascript:;" @click="gotoSongDetail(songItem.id)">{{songItem.name}}</a>
             </div>
             <div class="oper">
               <a href="javacsript:;" title="播放" class="play"></a>
@@ -89,6 +89,15 @@ export default {
       }
     },
 
+    // 跳转至歌曲详情页面
+    gotoSongDetail(songId) {
+      this.$router.push({
+        path: 'song/detail',
+        query: {
+          id:songId
+        }
+      })
+    }
   },
   watch: {
   }

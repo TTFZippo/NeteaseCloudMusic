@@ -11,6 +11,7 @@ const djradio = () => import ('../views/discover/discover_subpage/djradio/djradi
 const playlist = () => import ('../views/discover/discover_subpage/playlist/playlist.vue')
 const playlistDetail = () => import ('../views/playlistDetail/playlistDetail.vue')
 const artistDetail = () => import ('../views/artistDetail/artistDetail.vue')
+const songDetail = () => import ('../views/songDetail/songDetail.vue')
 Vue.use(VueRouter)
 
 const routes = [
@@ -47,14 +48,20 @@ const routes = [
         path: 'playlist',
         component: playlist
       },
+      // 歌单详情页
       {
-        // 歌单详情页
         path: 'playlist/detail',
         component: playlistDetail
       },
+      // 歌手详情
       {
         path: 'artist/detail',
         component: artistDetail
+      },
+      // 歌曲详情
+      {
+        path: 'song/detail',
+        component: songDetail
       }
     ]
   }

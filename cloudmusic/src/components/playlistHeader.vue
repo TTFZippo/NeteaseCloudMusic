@@ -281,10 +281,10 @@ export default {
   background-position: right -1106px;
 }
 .operation .comments:hover i {
-  background-position: 0 -2805px;
+  background-position: 0 -1465px;
 }
 .operation .comments i {
-  background-position: 0 -2761px;
+  background-position: 0 -1465px;
   padding-right: 2px;
   padding-left: 30px;
   font-style: normal;
