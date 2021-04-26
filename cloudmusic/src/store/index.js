@@ -8,7 +8,13 @@ export default new Vuex.Store({
     // dialog当前页
     dialog_currPage: 'index',
     // 账户信息
-    account: {}
+    account: {
+      profile: {
+        avatarUrl: ''
+      }
+    },
+    // 登录页是否出现
+    isLoginShow: false
   },
   mutations: {
     /**
@@ -19,7 +25,12 @@ export default new Vuex.Store({
       state.dialog_currPage = next;
     },
 
- 
+    changeLoginPageStatus(state, isLoginShow) {
+      state.isLoginShow = isLoginShow;
+    },
+    changeAccountData(state, accountData) {
+      state.account = accountData;
+    }
   },
   actions: {
   },
@@ -27,7 +38,13 @@ export default new Vuex.Store({
   },
   getters: {
     dialog_curr(state) {
-      return state.dialog_currPage
+      return state.dialog_currPage;
+    },
+    isLoginShow(state) {
+      return state.isLoginShow;
+    },
+    getAccountData(state) {
+      return state.account;
     }
   }
 })

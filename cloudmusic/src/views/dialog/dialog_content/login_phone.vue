@@ -21,10 +21,9 @@ export default {
     "login-form": loginForm,
   },
   methods: {
-    ...mapMutations(["changeDialogState"]),
+    ...mapMutations(["changeDialogState", "changeAccountData", "changeLoginPageStatus"]),
     // 登录
     login(loginData) {
-      // console.log(e);
       const { account: phone, password } = loginData;
       this.request
         .get("/login/cellphone", {
@@ -38,6 +37,9 @@ export default {
           // 将头像和名称存储起来
           window.sessionStorage.setItem('avatarUrl', result.profile.avatarUrl);
           window.sessionStorage.setItem('nickname', result.profile.nickname);
+          window.sessionStorage.setItem('id', result.account.id);
+          this.changeAccountData(result)
+          this.changeLoginPageStatus(false)
         })
         .catch((err) => {
           console.log(err);

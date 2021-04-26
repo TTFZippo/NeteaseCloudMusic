@@ -12,6 +12,8 @@ const playlist = () => import ('../views/discover/discover_subpage/playlist/play
 const playlistDetail = () => import ('../views/playlistDetail/playlistDetail.vue')
 const artistDetail = () => import ('../views/artistDetail/artistDetail.vue')
 const songDetail = () => import ('../views/songDetail/songDetail.vue')
+// 我的界面
+const my = () => import('../views/my/my.vue')
 Vue.use(VueRouter)
 
 const routes = [
@@ -64,6 +66,10 @@ const routes = [
         component: songDetail
       }
     ]
+  },
+  {
+    path: '/my',
+    component: my
   }
 ]
 

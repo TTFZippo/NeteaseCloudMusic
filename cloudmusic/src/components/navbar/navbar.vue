@@ -7,20 +7,20 @@
           <a href="javascript:;"></a>
         </h1>
         <ul class="nav-items">
-          <li>
+          <li @click="gotoDiscovery">
             <span>
               <a href="javascript:;">
                 <em>发现音乐</em>
                 <!-- 点击时出现的小三角 -->
-                <sub class="tri">&nbsp;</sub>
+                <sub class="tri" v-if="currentPage=='发现音乐'">&nbsp;</sub>
               </a>
             </span>
           </li>
-          <li>
+          <li @click="gotoMypage">
             <span>
               <a href="javascript:;">
                 <em>我的音乐</em>
-                <sub class="tri">&nbsp;</sub>
+                <sub class="tri" v-if="currentPage=='我的音乐'">&nbsp;</sub>
               </a>
             </span>
           </li>
@@ -28,7 +28,6 @@
             <span>
               <a href="javascript:;">
                 <em>朋友</em>
-                <sub class="tri">&nbsp;</sub>
               </a>
             </span>
           </li>
@@ -66,42 +65,80 @@
         </div>
         <div class="creator-center">创作者中心</div>
         <div class="login">
-          <a href="javascript:;" @click="login">登录</a>
+          <div v-if="avatarUrl" class="avatar-box">
+            <img :src="window.sessionStorage.getItem('avatarUrl')" alt="" class="avatar">
+            <ul class="oper">
+              <li>我的主页</li>
+              <li>我的消息</li>
+              <li>我的等级</li>
+              <li>会员认证</li>
+              <li>个人设置</li>
+              <li>实名认证</li>
+              <li @click="logout">退出</li>
+            </ul>
+          </div>
+          <a href="javascript:;" @click="login" v-else>登录</a>
         </div>
       </div>
     </nav>
+    <my-dialog v-if="isLoginShow()">
+
+    </my-dialog>
   </div>
 </template>
 
 <script>
+import dialog from '../../views/dialog/dialog.vue'
 import searchBox from '../searchbox/searchbox.vue'
+import {mapMutations, mapGetters} from 'vuex'
 export default {
   created () {
-    // console.log(this)
-    // this.request.get('/banner', {
-    //   params: {
-    //     type: 0
-    //   }
-    // }).then(result => {
-    //   console.log(result);
-    // }).catch(err => {
-    //   // console.log(err);
-    // })
+    this.avatarUrl = window.sessionStorage.getItem('avatarUrl');
   },
   data() {
     return {
       search_keyword: "",
       // 控制searchbox弹出
-      isSearhcboxShow: false
+      isSearhcboxShow: false,
+      avatarUrl: '',
+      currentPage: '发现音乐',
+      window: window
     };
   },
   components: {
-    'search-box': searchBox
+    'search-box': searchBox,
+    'my-dialog': dialog
+  },
+  computed: {
+    
   },
   methods: {
+    ...mapMutations(['changeLoginPageStatus']),
+    ...mapGetters(['isLoginShow', 'getAccountData']),
     login() {
-      
+      this.changeLoginPageStatus(true);
+    },
+    // 跳转至我的音乐
+    gotoMypage() {
+      this.currentPage = '我的音乐'
+      this.$router.push('/my');
+    },
+    // 跳转至发现音乐界面
+    gotoDiscovery() {
+      this.currentPage = '发现音乐'
+      this.$router.push('/discover');
+    },
+    // 退出登录
+    logout() {
+      this.request.get('/logout');
+      window.sessionStorage.removeItem('avatarUrl');
+      window.sessionStorage.removeItem('id');
+      window.sessionStorage.removeItem('nickname');
+      this.avatarUrl = ''
     }
+  },
+  watch: {
+    
   }
 };  
 </script>
@@ -237,5 +274,37 @@ export default {
 }
 .wrapper  .login a:hover {
   text-decoration: underline;
+}
+.avatar-box {
+  position: relative;
+  padding-top: 8px;
+  /* cursor: pointer; */
+}
+.avatar-box:hover .oper {
+  display: block;
+}
+.avatar-box .oper {
+  display: none;
+  width: 158px;
+  position: absolute;
+  top: 60px;
+  left: -50px;
+  list-style: none;
+  background-color: rgb(36, 36, 36);
+  border: 1px solid #202020;
+  box-shadow: 0 8px 24px 0 rgb(0 0 0 / 50%);
+  border-radius: 4px;
+  line-height: 20px;
+  color:#ccc;
+}
+.avatar-box .oper li {
+  margin: 5px 0;
+  cursor: pointer;
+}
+/* 登陆后显示头像 */
+.avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
 }
 </style>

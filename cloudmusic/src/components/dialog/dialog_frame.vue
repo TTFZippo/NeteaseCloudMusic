@@ -16,6 +16,7 @@
 
 <script>
 import dragObject from "../../utils/drag.js";
+import {mapMutations} from 'vuex'
 export default {
   beforeCreate() {
     dragObject.enable();
@@ -26,7 +27,10 @@ export default {
     };
   },
   methods: {
-    
+    ...mapMutations(['changeLoginPageStatus']),
+    shut() {
+      this.changeLoginPageStatus(false);
+    }
   },
 };
 </script>
